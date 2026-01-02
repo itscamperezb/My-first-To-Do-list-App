@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import InputArea from "./InputsArea.jsx";
-
 import Heading from "./Heading.jsx";
+import ToDoList from "./ToDoList.jsx";
 function App() {
   const [notes, setNotes] = useState("");
   const [items, setItems] = useState([]);
@@ -30,6 +30,14 @@ function App() {
     }
   }
 
+  function deleteItem(id) {
+    console.log(id);
+    setItems((prevItems) => {
+      return prevItems.filter((item, index) => {
+        return index !== id;
+      });
+    });
+  }
   return (
     <div className="container">
       <Heading />
@@ -43,8 +51,13 @@ function App() {
 
       <div>
         <ul>
-          {items.map((todoItem) => (
-            <li key={todoItem}>{todoItem}</li>
+          {items.map((todoItem, index) => (
+            <ToDoList
+              key={index}
+              id={index}
+              todoItem={todoItem}
+              onChecked={deleteItem}
+            />
           ))}
         </ul>
       </div>
